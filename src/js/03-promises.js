@@ -26,13 +26,36 @@ formEl.addEventListener("submit", event => {
   const step = Number(stepEl.value);
   const amount = Number(amountEl.value);
 
-  for (let i = 0; i < amount; i += 1) {
-    createPromise(i + 1, delay + i * step)
+  if (delay < 0) {
+    Notiflix.Report.warning("Alarm!", "Please, first delay ​​must not be less than or equal 0", "Reset");
+    return;
+  } else if (step < 0) {
+    Notiflix.Report.warning("Alarm!", "Please, delay step ​​must not be less than or equal 0", "Reset");
+    return;
+  } else if (amount <= 0) {
+    Notiflix.Report.warning("Alarm!", "Please, amount must not be less than to 0", "Reset");
+    return;
+  }
+
+  let currentDelay = delay;
+  for (let position = 1; position < amount; position += 1) {
+    createPromise(position, currentDelay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
-        Notiflix.Notify.success(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
+    currentDelay += step;
   }
+
+  // for (let i = 0; i < amount; i += 1) {
+  //   createPromise(i + 1, delay + i * step)
+  //     .then(({ position, delay }) => {
+  //       Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  //     })
+  //     .catch(({ position, delay }) => {
+  //       Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+  //     });
+  // }
 });

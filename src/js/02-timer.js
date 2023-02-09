@@ -13,7 +13,7 @@ startButton.setAttribute('disabled', true);
 
 startButton.removeAttribute('disabled');
 
-let currentDate = new Date();
+let userDate = new Date();
 let intervalId;
 
 const options = {
@@ -28,13 +28,13 @@ const options = {
       startButton.setAttribute('disabled', true);
       return;
     }
-    currentDate = selectedDates[0];
+    userDate = selectedDates[0];
     timerUpd();
   }, 
 };
 
 function timerUpd() {
-    const { days, hours, minutes, seconds } = convertMs(currentDate - new Date());
+    const { days, hours, minutes, seconds } = convertMs(userDate - new Date());
 
     dataDays.textContent = addLeadingZero(days);
     dataHours.textContent = addLeadingZero(hours);
@@ -48,7 +48,7 @@ startButton.addEventListener('click', startTimer);
 
 function startTimer() {
   intervalId = setInterval(() => {
-    if (currentDate <= new Date()) {
+    if (userDate <= new Date()) {
       clearInterval(intervalId);
       return;
     }
@@ -72,7 +72,7 @@ function convertMs(ms) {
   const minutes = Math.floor(((ms % day) % hour) / minute);
   // Remaining seconds
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-
+  
   return { days, hours, minutes, seconds };
 }
 
