@@ -6,7 +6,7 @@ const bodyEl = document.querySelector('body');
 const startBtn = document.querySelector('[data-start]');
 const stopBtn = document.querySelector('[data-stop]');
 
-const timerId = null;
+let timerId = null;
 
 startBtn.addEventListener('click', () => {
   startBtn.setAttribute('disabled', true);
