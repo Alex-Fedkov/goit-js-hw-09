@@ -6,12 +6,14 @@ const bodyEl = document.querySelector('body');
 const startBtn = document.querySelector('[data-start]');
 const stopBtn = document.querySelector('[data-stop]');
 
+const timerId = null;
+
 startBtn.addEventListener('click', () => {
-    startBtn.setAttribute('disabled', true);
-const timerId = setInterval(() => {
+  startBtn.setAttribute('disabled', true);
+  timerId = setInterval(() => {
     const newColor = getRandomHexColor();
     bodyEl.style.backgroundColor = newColor;
-}, 1000);
+  }, 1000);
 });
 
 stopBtn.addEventListener("click", () => {
